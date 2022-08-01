@@ -44,9 +44,10 @@ export default function Home() {
         <p className={styles.description}>
           <code >Paste your oldschool JavaScript functions on the left and push the convert button</code>
         </p>
-
+        <button className={styles.convert_button} onClick={handleClick}>Convert</button>
         <div className={styles.grid}>
           <div className={styles.card}>
+            
             <textarea className={styles.code} onChange={(e) => setBefore(e.target.value)}></textarea>
           </div>
 
@@ -61,7 +62,6 @@ export default function Home() {
 
 
         </div>
-        <button className={styles.convert_button} onClick={handleClick}>Convert</button>
       </main>
 
 
