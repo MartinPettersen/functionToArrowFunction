@@ -90,8 +90,8 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #33D17A;
+  border-color: #33D17A;
 }
 
 .card h2 {
@@ -117,8 +117,8 @@
 }
 
 .convert_button:hover {
-  color: darkorange;
-  border-color: darkorange;
+  color: #33D17A;
+  border-color: #33D17A;
 }
 
 .after {
