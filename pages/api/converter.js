@@ -39,7 +39,7 @@ const functionConverter = (input) => {
 
     const removeFunction = (i) => {
         const beforeText = input.substring(0, i);
-        const afterText = input.substring(i + matchPaternLength);
+        const afterText = input.substring(i + matchPaternLength +1);
         const afterTextWithArrow = insertArrow(i, afterText);
         return beforeText + afterTextWithArrow;
     }
@@ -125,4 +125,3 @@ export default function handler(req, res) {
         res.status(200).json({ result: `${response}` });
     }
   }
-  

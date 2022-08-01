@@ -9,6 +9,10 @@ export default function Home() {
   const [before, setBefore] = useState("");
   const [after, setAfter] = useState("");
 
+  const handleCopy =  async() => {
+    return await navigator.clipboard.writeText(after);
+  }
+
   const handleClick = () => {
 
       //const matchNewline = /\r|\n/.exec(before);
@@ -29,6 +33,7 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
+        <meta charset="utf-8"></meta>
       </Head>
 
       <main className={styles.main}>
@@ -37,7 +42,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          <code className={styles.code}>Does this look alright for code</code>
+          <code >Paste your oldschool JavaScript functions on the left and push the convert button</code>
         </p>
 
         <div className={styles.grid}>
@@ -46,7 +51,8 @@ export default function Home() {
           </div>
 
           <div className={styles.card}>
-           <div>
+           <div className={[styles.after_container]}>
+           <button onClick={handleCopy} >Copy</button>
              <p className={[styles.code, styles.after ]}>{after} </p>
            </div>
 
@@ -55,10 +61,12 @@ export default function Home() {
 
 
         </div>
-        <button onClick={handleClick}>Convert</button>
+        <button className={styles.convert_button} onClick={handleClick}>Convert</button>
       </main>
 
 
     </div>
   )
 }
+
+

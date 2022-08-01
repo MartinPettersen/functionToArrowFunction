@@ -61,6 +61,8 @@
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
+  width: 25rem;
+  height: 40rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
@@ -108,8 +110,31 @@
   margin-left: 0.5rem;
 }
 
+.convert_button {
+  height: 5rem;
+  width: 11rem;
+  font-size: 2rem;
+}
+
+.convert_button:hover {
+  color: darkorange;
+  border-color: darkorange;
+}
+
 .after {
   white-space: pre-wrap;
+}
+
+.after_container {
+  background: #1c1b1b;
+  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  width: 15rem;
+  height: 40rem;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+    border: 1px solid #eaeaea;
 }
 @media (max-width: 600px) {
   .grid {
