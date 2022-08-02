@@ -103,6 +103,7 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 100%;
+  width: 100vh;
 }
 
 .card:hover,
@@ -148,7 +149,6 @@
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
-  width: 15rem;
   height: 40rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;

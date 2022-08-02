@@ -3,6 +3,7 @@ import { setRevalidateHeaders } from 'next/dist/server/send-payload';
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
+import CodeText from '../components/CodeText';
 import styles from '../styles/Home.module.css'
 export default function Home() {
 
@@ -24,7 +25,7 @@ export default function Home() {
 
       axios.post('/api/converter', { input })
       .then((res) => setAfter(res.data.result))
-      const matchNewlineAfter = after.replace(/\r|\n/, '\\n');
+      const matchNewlineAfter = after.replace(/\r|\n/, '***');
       
       console.log(matchNewlineAfter)
   }
@@ -54,7 +55,8 @@ export default function Home() {
           <div className={styles.card}>
            <div className={[styles.after_container]}>
            <button onClick={handleCopy} >Copy</button>
-             <p className={[styles.code, styles.after ]}>{after} </p>
+             
+             <CodeText text={after} />
            </div>
 
           </div>
