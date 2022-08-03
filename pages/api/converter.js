@@ -1,8 +1,10 @@
 const functionConverter = (input) => {
   let parenthesisStack = [];
   let doubleQuoteStack = [];
-  let SingleQuoteStack = [];
+  let singleQuoteStack = [];
   let backtickStack = [];
+
+  let commentStack = [];
 
   const matchPattern = "function";
   const matchDoubleQuote = '"';
@@ -12,14 +14,37 @@ const functionConverter = (input) => {
   const matchMultiLineComOp = "/*";
   const matchMultiLineComClo = "*/";
 
-  const matchPaternLength = matchPattern.length;
-  const inputLength = input.length;
+  const commentList = ['"', "'", "`", "(", "/*", "*/"];
 
-  let response;
+  const matchPaternLength = matchPattern.length;
+  //const inputLength = input.length;
+  // kan sikkert ikke bruke input.length
+
+  let finished = false;
+
+  let response = input;
   //--------------------------------------------------------------------------
+
+  const commentControll = (i) => {
+    if (commentList.includes(response[i])) {
+      if (commentStack.length > 0) {
+        if (commentStack[0] === response[i]) {
+          commentStack.pop();
+        }
+      } else {
+        commentStack.push(response[i]);
+      }
+    }
+  };
 
   const commentedOutChecker = () => {
     if (doubleQuoteStack.length > 0) {
+      return true;
+    }
+    return false;
+  };
+  const commentedOutChecker2 = (type) => {
+    if (commentStack.length > 0) {
       return true;
     }
     return false;
@@ -33,66 +58,42 @@ const functionConverter = (input) => {
   };
 
   const removeFunction = (i) => {
-    const beforeText = input.substring(0, i);
-    const afterText = input.substring(i + matchPaternLength + 1);
+    const beforeText = response.substring(0, i);
+    const afterText = response.substring(i + matchPaternLength + 1);
     const afterTextWithArrow = insertArrow(i, afterText);
     return beforeText + afterTextWithArrow;
   };
 
   const insertArrow = (i, rem) => {
-    //const remaining = input.substring(i + matchPaternLength +1);
-    //console.log(remaining);
-    //const beforeText = rem.substring(0, i+1);
-    //console.log(beforeText);
-
-    //let tempString = ""
-    //console.log(rem);
-    const regExp = /(\([^]+\))/;
-    //const matches = regExp.exec(rem);
+    const regExp = /(\([^]+?\)) {/;
     const match = rem.replace(regExp, "$1 =>");
-    //console.log(match)
     return match;
-    /*
-        for (let i = 0; i < remaining.length; i++){
-            
-            tempString += remaining[i];
-            if(remaining[i] === "(" && !commentedOutChecker()){
-            
-                if(commentedOutChecker(doubleQuoteStack)){
-                    doubleQuoteStack.pop();
-                } else {
-                    doubleQuoteStack.push('"');
-                }
-            }
-            if(parenthesisStack.length === 0){
-
-                //break;
-            }
-        }
-        */
   };
   // ------------------------------------------------------------------------
 
-  for (let i = 0; i < inputLength; i++) {
-    if (input[i] === matchDoubleQuote) {
+  for (let i = 0; i < response.length; i++) {
+    commentControll(i);
+    /*
+    if (response[i] === matchDoubleQuote) {
       if (commentedOutChecker(doubleQuoteStack)) {
         doubleQuoteStack.pop();
       } else {
         doubleQuoteStack.push('"');
       }
     }
-
-    if (input[i] === matchPattern[0] && !commentedOutChecker()) {
-      if (checkRemainingLength(i, matchPaternLength, inputLength)) {
+    */
+    if (response[i] === matchPattern[0] && !commentedOutChecker2()) {
+      if (checkRemainingLength(i, matchPaternLength, response.length)) {
         if (
-          input[i + matchPaternLength - 1] ===
+          response[i + matchPaternLength - 1] ===
           matchPattern[matchPaternLength - 1]
         ) {
-          response = "front and end match";
+          console.log(i);
           response = removeFunction(i);
         }
       } else {
-        response = "string to short to contain function";
+        finished = true;
+        console.log("string to short to contain function");
         break;
       }
     }
@@ -103,8 +104,6 @@ const functionConverter = (input) => {
 export default function handler(req, res) {
   if (req.method === "POST") {
     const input = req.body.input.text;
-    //      const matchNewline = /\r|\n/.exec(input);
-
     const response = functionConverter(input);
     res.status(200).json({ result: `${response}` });
   }
