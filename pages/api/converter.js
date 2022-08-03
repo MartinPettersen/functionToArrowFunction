@@ -43,6 +43,7 @@ const functionConverter = (input) => {
     }
     return false;
   };
+
   const commentedOutChecker2 = (type) => {
     if (commentStack.length > 0) {
       return true;
@@ -65,23 +66,31 @@ const functionConverter = (input) => {
   };
 
   const insertArrow = (i, rem) => {
-    const regExp = /(\([^]+?\)) {/;
-    const match = rem.replace(regExp, "$1 =>");
+    const regExp = /(\([^]*?\)) {/;
+    const regLetters = /[a-zA-Z]/;
+    //const regMulti = /,/;
+    const regMulti = /[a-zA-Z0-9]*, [a-zA-Z0-9]*/;
+
+
+    let match = rem.replace(regExp, "$1 => {");
+
+    const temp = /\(([^]*?)\)/.exec(match);
+    if (temp !== null){
+
+      if (regLetters.test(temp[0]) && !regMulti.test(temp[0])){
+        console.log('contains more than one')
+        match = match.replace(/\(([^]*?)\)/, "$1");
+
+      }
+    }
+    
+
     return match;
   };
   // ------------------------------------------------------------------------
 
   for (let i = 0; i < response.length; i++) {
     commentControll(i);
-    /*
-    if (response[i] === matchDoubleQuote) {
-      if (commentedOutChecker(doubleQuoteStack)) {
-        doubleQuoteStack.pop();
-      } else {
-        doubleQuoteStack.push('"');
-      }
-    }
-    */
     if (response[i] === matchPattern[0] && !commentedOutChecker2()) {
       if (checkRemainingLength(i, matchPaternLength, response.length)) {
         if (
