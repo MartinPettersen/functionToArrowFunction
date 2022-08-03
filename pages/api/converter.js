@@ -59,13 +59,14 @@ const functionConverter = (input) => {
   };
 
   const insertArrow = (i, rem) => {
-    const regExp = /(\([^]*?\)) {/;
+    const regExp = /(\([^]*?\)) /;
     const regLetters = /[a-zA-Z]/;
     //const regMulti = /,/;
     const regMulti = /[a-zA-Z0-9]*, [a-zA-Z0-9]*/;
 
-    let match = rem.replace(regExp, "$1 => {");
-
+    let match = rem.replace(regExp, "$1 => ");
+    //console.log(match);
+    match = parameterCheck(match);
     const temp = /\(([^]*?)\)/.exec(match);
     if (temp !== null) {
       if (regLetters.test(temp[0]) && !regMulti.test(temp[0])) {
@@ -76,6 +77,29 @@ const functionConverter = (input) => {
 
     return match;
   };
+
+  const parameterCheck = (text) => {
+    const regExp = /(\{[^]*?\})/;
+    const regSemi = /;/g;
+    const temp = regExp.exec(text);
+    console.log(text);
+    console.log(temp[0]);
+
+    const count = (temp[0].match(regSemi) || []).length;
+
+    if ( count === 1) {
+      const statement = /\t([^]*?);/.exec(temp[0]);
+      console.log("æ")
+      //console.log(statement[0])
+      let pure = statement[0].replace("\treturn ", "");
+      pure = pure.replace(";", "");
+      console.log(pure)
+
+      return text.replace(temp[0], pure);
+    }
+    console.log("number of semi colongs: " + count);
+  }
+
   // ------------------------------------------------------------------------
 
   for (let i = 0; i < response.length; i++) {
