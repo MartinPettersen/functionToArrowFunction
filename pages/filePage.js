@@ -16,8 +16,6 @@ const FilePage = () => {
     const fileReader = new FileReader();
     const { files } = event.target;
 
-    
-
     fileReader.readAsText(files[0], "UTF-8");
     fileReader.onload = (e) => {
       const content = e.target.result;
@@ -43,9 +41,7 @@ const FilePage = () => {
       element.click();
     });
   };
-  useEffect(()=> {
-
-  },[savedBytes]);
+  useEffect(() => {}, [savedBytes]);
   return (
     <div>
       <main className={styles.main}>
@@ -55,18 +51,23 @@ const FilePage = () => {
         <p className={styles.description}>
           <code>Upload a file and push the convert button</code>
         </p>
-        <div className={styles.bytes}>{savedBytes !== 0 ? <p>You saved {savedBytes} bytes</p>: <></>}</div>
+        <div className={styles.bytes}>
+          {savedBytes !== 0 ? <p>You saved {savedBytes} bytes</p> : <></>}
+        </div>
         <label className={styles.upload}>
           Upload
-        <input className={styles.file}
-          type="file"
-          value={selectedFile}
-          ref={inputFile}
-          onChange={readFile}
-        />
+          <input
+            className={styles.file}
+            type="file"
+            value={selectedFile}
+            ref={inputFile}
+            onChange={readFile}
+          />
         </label>
         {fileContent !== "" ? (
-          <button className={styles.download} onClick={downloadTxtFile}>Convert</button>
+          <button className={styles.download} onClick={downloadTxtFile}>
+            Convert
+          </button>
         ) : (
           <></>
         )}

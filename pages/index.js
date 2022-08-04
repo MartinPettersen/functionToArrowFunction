@@ -15,12 +15,10 @@ export default function Home() {
   };
 
   const handleTab = (e) => {
-    //console.log(e)
-    console.log(e.target.selectionEnd)
-    console.log(e.target.selectionStart)
+    console.log(e.target.selectionEnd);
+    console.log(e.target.selectionStart);
 
-
-    if (e.key == 'Tab') {
+    if (e.key == "Tab") {
       e.preventDefault();
       const start = before.substring(0, e.target.selectionStart);
       const end = before.substring(e.target.selectionEnd);
@@ -28,7 +26,7 @@ export default function Home() {
       const insertTab = start + "\t" + end;
       setBefore(insertTab);
     }
-  }
+  };
 
   const handleClick = () => {
     const matchNewline = before.replace(/\r|\n/, "\n");
@@ -36,12 +34,11 @@ export default function Home() {
     axios
       .post("/api/converter", { input })
       .then((res) => setAfter(res.data.result));
-    // const matchNewlineAfter = after.replace(/\r|\n/, '***');
   };
 
   useEffect(() => {
-    console.log("changeed before")
-  },[before]);
+    console.log("changeed before");
+  }, [before]);
 
   return (
     <div className={styles.container}>
@@ -67,14 +64,13 @@ export default function Home() {
         <div className={styles.grid}>
           <div className={styles.card}>
             <div className="whiteSpacesFix">
-
-            <textarea
-              className={styles.code}
-              value={before}
-              onKeyDown={(e) => handleTab(e)}
-              onChange={(e) => setBefore(e.target.value)}
+              <textarea
+                className={styles.code}
+                value={before}
+                onKeyDown={(e) => handleTab(e)}
+                onChange={(e) => setBefore(e.target.value)}
               ></textarea>
-              </div>
+            </div>
           </div>
 
           <div className={styles.card}>
