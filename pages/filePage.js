@@ -8,6 +8,9 @@ const FilePage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState("");
   const [fileName, setFileName] = useState("yourfile");
+  const [oldSize, setOldSize] = useState(0);
+  const [newSize, setNewSize] = useState(0);
+  const [savedBytes, setSavedBytes] = useState(0);
 
   const readFile = (event) => {
     const fileReader = new FileReader();
@@ -19,6 +22,7 @@ const FilePage = () => {
     fileReader.onload = (e) => {
       const content = e.target.result;
       setFileName(files[0].name);
+      setOldSize(files[0].size);
       setFileContent(content);
     };
   };
@@ -32,13 +36,16 @@ const FilePage = () => {
         type: "text/plain",
       });
       element.href = URL.createObjectURL(file);
-
+      setNewSize(file.size);
+      setSavedBytes(oldSize - file.size);
       element.download = `${fileName}`;
       document.body.appendChild(element);
       element.click();
     });
   };
+  useEffect(()=> {
 
+  },[savedBytes]);
   return (
     <div>
       <main className={styles.main}>
@@ -48,7 +55,7 @@ const FilePage = () => {
         <p className={styles.description}>
           <code>Upload a file and push the convert button</code>
         </p>
-
+        <div className={styles.bytes}>{savedBytes !== 0 ? <p>You saved {savedBytes} bytes</p>: <></>}</div>
         <label className={styles.upload}>
           Upload
         <input className={styles.file}
