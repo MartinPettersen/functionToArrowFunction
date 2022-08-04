@@ -19,6 +19,20 @@ a {
   white-space: pre-wrap;
 }
 
+.navbar {
+  background-color: #2EC27E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+}
+.navButton {
+  margin: 0.7rem;
+  padding: 0.7rem;
+  font-size: 2rem;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
