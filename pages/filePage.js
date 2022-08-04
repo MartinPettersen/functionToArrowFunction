@@ -45,25 +45,29 @@ const FilePage = () => {
 
   const convertFileContent = () => {
     //const matchNewline = fileContent.replace(/\r|\n/, "\n");
+
+  }
+
+  const downloadTxtFile = async () => {
+    const element = document.createElement("a");
+    let file;
     const input = { text: fileContent };
     axios
       .post("/api/converter", { input })
-      .then((res) => setConvertedContent(res.data.result));
+      .then((res) => {
 
-    console.log(convertedContent);
-  }
+  
+        file = new Blob([res.data.result], {
+          type: "text/plain",
+        });
+        element.href = URL.createObjectURL(file);
+    
+        element.download = `${fileName}`;
+        document.body.appendChild(element);
+        element.click();
+      }
+      );
 
-  const downloadTxtFile = () => {
-    convertFileContent();
-    const element = document.createElement("a");
-    const file = new Blob([convertedContent], {
-      type: "text/plain",
-    });
-    element.href = URL.createObjectURL(file);
-
-    element.download = `${fileName}`;
-    document.body.appendChild(element);
-    element.click();
   };
 
   return (
