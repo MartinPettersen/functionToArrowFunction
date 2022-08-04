@@ -13,13 +13,12 @@ const FilePage = () => {
     const fileReader = new FileReader();
     const { files } = event.target;
 
-    console.log(typeof files);
+    
 
     fileReader.readAsText(files[0], "UTF-8");
     fileReader.onload = (e) => {
       const content = e.target.result;
       setFileName(files[0].name);
-      console.log(content);
       setFileContent(content);
     };
   };

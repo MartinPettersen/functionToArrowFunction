@@ -29,6 +29,8 @@ const About = () => {
         <h3>And semicolons after every function</h3>
 
         <h1>Need to deal with double slash comments</h1>
+        <h1>Need to deal with tab in textarea</h1>
+
         </div>
       </main>
     </div>

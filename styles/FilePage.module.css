@@ -155,8 +155,12 @@
   align-items: center;
   justify-content: center;
   margin: 2rem;
+  background-color: #241F31;
 }
+.upload:hover {
+  background-color: #3D3846;
 
+}
 .download {
   height: 5rem;
   width: 11rem;
@@ -164,6 +168,12 @@
   color: #FF7800;
   border-radius: 10px;
   border: solid 2px #FF7800;
+  background-color: #241F31;
+  
+}
+.download:hover {
+  background-color: #3D3846;
+
 }
 
 .after {

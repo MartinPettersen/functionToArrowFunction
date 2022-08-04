@@ -26,7 +26,6 @@ export default function Home() {
       const end = before.substring(e.target.selectionEnd);
 
       const insertTab = start + "\t" + end;
-      console.log(insertTab);
       setBefore(insertTab);
     }
   }
