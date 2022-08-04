@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../styles/Home.module.css";
+import axios from "axios";
 
 const FilePage = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -8,7 +9,7 @@ const FilePage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState("");
   const [fileName, setFileName] = useState("yourfile");
-
+  const [convertedContent, setConvertedContent] = useState("");
 
   /*
     const uploadFile = (e) => {
@@ -42,9 +43,20 @@ const FilePage = () => {
     //console.log(inputFile.current.files[0]);
   };
 
+  const convertFileContent = () => {
+    //const matchNewline = fileContent.replace(/\r|\n/, "\n");
+    const input = { text: fileContent };
+    axios
+      .post("/api/converter", { input })
+      .then((res) => setConvertedContent(res.data.result));
+
+    console.log(convertedContent);
+  }
+
   const downloadTxtFile = () => {
+    convertFileContent();
     const element = document.createElement("a");
-    const file = new Blob([fileContent], {
+    const file = new Blob([convertedContent], {
       type: "text/plain",
     });
     element.href = URL.createObjectURL(file);
