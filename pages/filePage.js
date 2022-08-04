@@ -1,30 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/FilePage.module.css";
 import axios from "axios";
 
 const FilePage = () => {
-  const [isDragging, setIsDragging] = useState(false);
   const inputFile = useRef(null);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState("");
   const [fileName, setFileName] = useState("yourfile");
-  const [convertedContent, setConvertedContent] = useState("");
 
-  /*
-    const uploadFile = (e) => {
-        setSelectedFile(e)
-        console.log('clicked')
-        console.log(selectedFile);
-
-    } */
-  /*
-    fetch('filePage.js')
-    .then(response => response.text())
-    .then(text => console.log(text))
-    */
-
-  //<input type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
   const readFile = (event) => {
     const fileReader = new FileReader();
     const { files } = event.target;
@@ -37,37 +21,23 @@ const FilePage = () => {
       setFileName(files[0].name);
       console.log(content);
       setFileContent(content);
-      //setFileContent(JSON.parse(content));
     };
-
-    //console.log(inputFile.current.files[0]);
   };
-
-  const convertFileContent = () => {
-    //const matchNewline = fileContent.replace(/\r|\n/, "\n");
-
-  }
 
   const downloadTxtFile = async () => {
     const element = document.createElement("a");
     let file;
     const input = { text: fileContent };
-    axios
-      .post("/api/converter", { input })
-      .then((res) => {
+    axios.post("/api/converter", { input }).then((res) => {
+      file = new Blob([res.data.result], {
+        type: "text/plain",
+      });
+      element.href = URL.createObjectURL(file);
 
-  
-        file = new Blob([res.data.result], {
-          type: "text/plain",
-        });
-        element.href = URL.createObjectURL(file);
-    
-        element.download = `${fileName}`;
-        document.body.appendChild(element);
-        element.click();
-      }
-      );
-
+      element.download = `${fileName}`;
+      document.body.appendChild(element);
+      element.click();
+    });
   };
 
   return (
@@ -77,21 +47,20 @@ const FilePage = () => {
           Turn your old functions in to arrow functions
         </h1>
         <p className={styles.description}>
-          <code>
-            Upload a file and push the
-            convert button
-          </code>
+          <code>Upload a file and push the convert button</code>
         </p>
-        
+
         <input
           type="file"
           value={selectedFile}
           ref={inputFile}
           onChange={readFile}
         />
-        {/*<button onClick={() => inputFile.current.click()}>upload</button>*/}
-        {fileContent !== "" ? <button onClick={downloadTxtFile}>Convert</button> :<></>}
-        
+        {fileContent !== "" ? (
+          <button onClick={downloadTxtFile}>Convert</button>
+        ) : (
+          <></>
+        )}
       </main>
     </div>
   );
