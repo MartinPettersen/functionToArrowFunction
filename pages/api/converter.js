@@ -7,14 +7,13 @@ const functionConverter = (input) => {
   let commentStack = [];
 
   const matchPattern = "function";
-  const matchDoubleQuote = '"';
-  const matchSingleQuote = "'";
-  const matchBacktick = "`";
   const matchParenthesis = "(";
   const matchMultiLineComOp = "/*";
   const matchMultiLineComClo = "*/";
 
-  const commentList = ['"', "'", "`", "(", "/*", "*/"];
+  const commentList = ['"', "'", "`", "(",];
+  const commentListBackslash = ['//', "/*", "*/"];
+
 
   const matchPaternLength = matchPattern.length;
   //const inputLength = input.length;
@@ -26,6 +25,13 @@ const functionConverter = (input) => {
   //--------------------------------------------------------------------------
 
   const commentControll = (i) => {
+    let temp;
+    if(response[i] === '/' || response[i] === '*'){
+      temp = response[i] + response[i+1];
+    } else {
+      temp = response[i];
+    }
+    console.log(temp);
     if (commentList.includes(response[i])) {
       if (commentStack.length > 0) {
         if (commentStack[0] === response[i]) {
@@ -33,6 +39,15 @@ const functionConverter = (input) => {
         }
       } else {
         commentStack.push(response[i]);
+      }
+    }
+    if (commentListBackslash.includes(temp)) {
+      if (commentStack.length > 0) {
+        if (commentStack[0] === temp) {
+          commentStack.pop();
+        }
+      } else {
+        commentStack.push(temp);
       }
     }
   };
@@ -82,22 +97,22 @@ const functionConverter = (input) => {
     const regExp = /(\{[^]*?\})/;
     const regSemi = /;/g;
     const temp = regExp.exec(text);
-    console.log(text);
-    console.log(temp[0]);
+    // console.log(text);
+    // console.log(temp[0]);
 
     const count = (temp[0].match(regSemi) || []).length;
 
     if ( count === 1) {
       const statement = /\t([^]*?);/.exec(temp[0]);
-      console.log("æ")
+      // console.log("æ")
       //console.log(statement[0])
       let pure = statement[0].replace("\treturn ", "");
       pure = pure.replace(";", "");
-      console.log(pure)
+      // console.log(pure)
 
       return text.replace(temp[0], pure);
     }
-    console.log("number of semi colongs: " + count);
+    // console.log("number of semi colongs: " + count);
   }
 
   // ------------------------------------------------------------------------

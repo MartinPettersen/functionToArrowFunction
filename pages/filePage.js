@@ -50,14 +50,17 @@ const FilePage = () => {
           <code>Upload a file and push the convert button</code>
         </p>
 
-        <input
+        <label className={styles.upload}>
+          Upload
+        <input className={styles.file}
           type="file"
           value={selectedFile}
           ref={inputFile}
           onChange={readFile}
         />
+        </label>
         {fileContent !== "" ? (
-          <button onClick={downloadTxtFile}>Convert</button>
+          <button className={styles.download} onClick={downloadTxtFile}>Convert</button>
         ) : (
           <></>
         )}

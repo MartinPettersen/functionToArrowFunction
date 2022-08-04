@@ -140,6 +140,31 @@
   color: #33D17A;
   border-color: #33D17A;
 }
+.file {
+
+  display: none;
+}
+.upload {
+  border-radius: 10px;
+  border: solid 2px #33D17A;
+  color: #33D17A;
+  height: 5rem;
+  width: 11rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.download {
+  height: 5rem;
+  width: 11rem;
+  font-size: 2rem;
+  color: #FF7800;
+  border-radius: 10px;
+  border: solid 2px #FF7800;
+}
 
 .after {
   white-space: pre-wrap;
