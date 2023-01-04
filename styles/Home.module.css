@@ -105,6 +105,7 @@
   max-width: 100%;
   width: 70vh;
   white-space: pre-wrap;
+  color: #33D17A;
 }
 
 .card:hover,

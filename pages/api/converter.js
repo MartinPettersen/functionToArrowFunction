@@ -104,16 +104,16 @@ const functionConverter = (input) => {
     }
     const count = (collection.match(regSemi) || []).length;
     if (count === 1) {
-      const statement = /\t([^]*?);/.exec(temp[0]);
+      const statement = /(\t|[^{\r\n`\])([^]*?);/.exec(temp[0]);
 
       let pure;
 
-      if (statement[0].match("\treturn ")) {
-        pure = statement[0].replace(/\treturn /g, "");
+      if (statement[0].match("(\t|\s*)return ")) {
+        pure = statement[0].replace(/(\t|\s*)return /g, "");
       } else {
-        pure = statement[0].replace(/\t/g, "");
+        pure = statement[0].replace(/(\t|\s*)/g, "");
       }
-      pure = pure.replace(/\t/g, "");
+      pure = pure.replace(/(\t|\s*)/g, "");
 
       pure = pure.replace(";", "");
 
